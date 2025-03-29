@@ -11,7 +11,7 @@ MAILBOXES=$(curl -s --insecure -X GET "https://localhost/api/v1/get/mailbox/all"
   -H "X-API-Key: $MAILCOW_API_KEY" | jq -r '.[].username')
 
 # Get the list of approved senders from OCI
-OCI_SENDERS=$(oci email approved-sender list --compartment-id $COMPARTMENT_OCID | jq -r '.data[]."email-address"')
+OCI_SENDERS=$(oci email sender list --compartment-id $COMPARTMENT_OCID | jq -r '.data[]."email-address"')
 
 # Convert OCI senders to an array
 OCI_SENDERS_ARRAY=($OCI_SENDERS)
@@ -20,7 +20,7 @@ OCI_SENDERS_ARRAY=($OCI_SENDERS)
 for MAILBOX in $MAILBOXES; do
   if [[ ! " ${OCI_SENDERS_ARRAY[@]} " =~ " ${MAILBOX} " ]]; then
     # If the mailbox is not in the OCI approved senders list, add it
-    oci email sender create --compartment-id $COMPARTMENT_OCID --email-address $MAILBOX    
+    oci email sender create --compartment-id $COMPARTMENT_OCID --email-address $MAILBOX
     echo "Added $MAILBOX to OCI approved senders."
   fi
 done

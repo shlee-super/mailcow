@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/root/lib/oracle-cli/bin
 # Define the compartment OCID
 COMPARTMENT_OCID="ocid1.tenancy.oc1..aaaaaaaak4fkxtchmmfzxbifkhtmjl5rgzna3ivz5xznbcxtlznwb3yk6i5a"
 
